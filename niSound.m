@@ -1,4 +1,4 @@
-function nisound(filename)
+function niSound(filename)
 
 % adds the NI card
 d = daq('ni');

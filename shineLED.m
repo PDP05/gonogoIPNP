@@ -1,10 +1,9 @@
-function deliverWater()
-
+function shineLED()
     % Create a data acquisition session
     s = daq('ni');
 
     % Add a digital output channel for the TTL signal
-    addinput(s, 'Dev1', 'Port0/Line0', 'OutputOnly');
+    addinput(s, 'Dev1', 'Port1/Line0', 'OutputOnly');   % change device and port accordingly
 
     % Generate TTL pulse
     outputData = logical([1; 0]);  % High for 1 sample, then low

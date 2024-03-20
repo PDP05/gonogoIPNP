@@ -111,8 +111,8 @@ for trial = 1:num_trials
     pause(ITI_duration);
     
     % Shines the LED and launches lick acquisition until the program exits
-    disp('Shining LED...');
-    shineLED();
+    disp('Shining LED...'); % TODO: implement code to shine the LED (note can 
+    % countLicks(SamplingRate, lick_threshold); % starts counting licks in the background
 
     %% Wait for NLP while checking for inputs
 
