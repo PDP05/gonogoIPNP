@@ -41,8 +41,9 @@ prev_ITI = 0;               % stores previous ITI's value.
 go_sound = "go.wav";        % sets the filename for the go sound.
 nogo_sound = "nogo.wav";    % sets the filename for the nogo sound.
 
-% Save file
-saveFile = ['trial_' datestr(now, 'yyyymmdd') '.csv'];
+% Save file (will be called 'trial-day-month-year
+% hour-minute-second.xlsx' with each timing set accordingly)
+saveFile = sprintf('trial_%s.xlsx', datestr(now, 'dd-mm-yyyy HH-MM-SS'));
 
 % preallocation of save data
 sz = [1 14];
