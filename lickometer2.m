@@ -1,19 +1,21 @@
 function lickometer2(duration)
     dq = daq('ni');
 
-    Lick = 3;
+    Lick = 'Port0/Line3';   % 3rd port on DIO
     dq.Rate = 1000;
     Bin = 0.5;
 
-    addinput(dq, "Dev1", Lick, 'Voltage');
+    mockInput = addinput(dq, 'Dev1', 'ai0', 'Voltage'); % creates a useless channel to initializes the BNC 2090 clock
 
-    dq.ScansAvailableFCNCount = Bin * dq.Rate;
-
-    % Start the acquisition
-    start(dq, "Duration", seconds(duration));
+    LickInput = addinput(dq, 'Dev1', Lick, 'Digital');
     
+    dq.ScansAvailableFcnCount = Bin * dq.Rate;
+    
+    % send data to failsafe function as well
+    dq.ScansAvailableFcn = @(src,evt) failSafe(src,~);
+
     % Read data and timestamps
-    [data, timestamps, ~] = read(dq, dq.ScansAvailableFCNCount, "OutputFormat", "Matrix");
+    [data, timestamps, ~] = read(dq, dq.ScansAvailableFcnCount,"OutputFormat", "Matrix");
 
     % Do something with the acquired data and timestamps
     disp("Data acquired:");
@@ -23,4 +25,15 @@ function lickometer2(duration)
     
     % Stop the acquisition
     stop(dq);
+end
+
+% Failsafe function not to damage anything
+function failSafe(src, ~)
+    [data, timestamps, ~] = read(src, src.ScansAvailableFcnCount, "OutputFormat","Matrix");
+
+    if any(data >= 1.0)
+        disp('Dected voltage exceeding 1V: stopping acquisition')
+        % stop conrinuous acquisitions explicitly
+        src.stop()
+    end
 end
