@@ -1,13 +1,13 @@
 function lickometer2(duration)
     dq = daq('ni');
 
-    Lick = 'Port0/Line3';   % 3rd port on DIO
+    LickPort = 'Port0/Line3';   % 3rd port on DIO
     dq.Rate = 1000;
     Bin = 0.5;
 
     mockInput = addinput(dq, 'Dev1', 'ai0', 'Voltage'); % creates a useless channel to initializes the BNC 2090 clock
 
-    LickInput = addinput(dq, 'Dev1', Lick, 'Digital');
+    LickInput = addinput(dq, 'Dev1', LickPort, 'Digital');
     
     dq.ScansAvailableFcnCount = Bin * dq.Rate;
     
@@ -16,12 +16,16 @@ function lickometer2(duration)
 
     % Read data and timestamps
     [data, timestamps, ~] = read(dq, dq.ScansAvailableFcnCount,"OutputFormat", "Matrix");
+        
+    licks = data(:,2);
 
     % Do something with the acquired data and timestamps
     disp("Data acquired:");
     disp(data);
     disp("Timestamps:");
     disp(timestamps);
+    disp("licks");
+    disp("licks");
     
     % Stop the acquisition
     stop(dq);
