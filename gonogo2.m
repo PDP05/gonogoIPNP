@@ -127,6 +127,9 @@ for trial = 1:num_trials
     % Read licks during NLP and count them
     NLPLickCount = lickometer(NLP_duration);
 
+    % or using lickometer2
+    % NLPLickCount = lick_counter(NLP_duration);
+
     while toc(start_NLP) < NLP_duration
 
         % Check for inputs
@@ -162,6 +165,9 @@ for trial = 1:num_trials
 
         % Read licks during no go trial and count them
         nogoLickCount = lickometer(FRW_duration);
+
+        % or using lickometer2
+        % nogoLickCount = lick_counter(FRW_duration);
         
         while toc(start_nogoTrial) < FRW_duration
             
@@ -215,6 +221,9 @@ for trial = 1:num_trials
         % Read licks during go trial and count them
         goLickCount = lickometer(FRW_duration);
 
+        % or using lickometer2
+        % goLickCount = lick_counter(FRW_duration);
+
         while toc(start_goTrial) < FRW_duration
             
             % MISS conditions
@@ -248,6 +257,9 @@ for trial = 1:num_trials
 
         % Read licks during go trial and count them
         catchLickCount = lickometer(FRW_duration);
+
+        % or using lickometer2
+        % catchLickCount = lick_counter(FRW_duration);
         
         while toc(start_catchTrial) < FRW_duration
         
@@ -270,4 +282,13 @@ for trial = 1:num_trials
     % writes it to a csv file (and append new data)
     writetable(saveTable, saveFile, 'WriteMode','append');
 
+end
+
+% Function to count licks from lickometer2
+function lick_counter(duration) % for use with lickometer2 (lickometer 2 just records data for X amount of time)
+    % Call lickometer2 function to acquire data and timestamps
+    [data, ~] = lickometer2(duration);
+
+    % Count the number of data points
+    licks = numel(data);
 end
