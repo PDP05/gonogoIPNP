@@ -12,7 +12,7 @@ function lickometer2(duration)
     dq.ScansAvailableFcnCount = Bin * dq.Rate;
     
     % send data to failsafe function as well
-    dq.ScansAvailableFcn = @(src,evt) failSafe(src,~);
+    dq.ScansAvailableFcn = @(src,evt) failSafe(src,evt);
 
     % Read data and timestamps
     [data, timestamps, ~] = read(dq, dq.ScansAvailableFcnCount,"OutputFormat", "Matrix");
@@ -25,7 +25,7 @@ function lickometer2(duration)
     disp("Timestamps:");
     disp(timestamps);
     disp("licks");
-    disp("licks");
+    disp(licks);
     
     % Stop the acquisition
     stop(dq);
