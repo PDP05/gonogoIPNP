@@ -1,21 +1,17 @@
-function niSound(filename)
+% Load audio file
+[audioData, Fs] = audioread('your_audio_file.wav');
 
-% adds the NI card
-d = daq('ni');
+% Create NI-DAQmx session
+s = daq.createSession('ni');
 
-% add analog output channel
-addoutput(d, 'Dev1', 'ao0', 'Voltage');
+% Add an analog output channel
+addAnalogOutputChannel(s, 'Dev1', 'ao0', 'Voltage');
 
-% gets the audio data and samplerate from the file
-data = audioread(filename);
+% Set the sampling rate to match the audio file
+s.Rate = Fs;
 
-% normalises the data (so it doesn't go over what the NI card can send)
-data = data / max(abs(data));
+% Queue the audio data for output
+queueOutputData(s, audioData);
 
-% sends the data to the card
-write(d, data);
-
-% starts playback
-read(d);
- 
-end
+% Start the session to play the audio
+startForeground(s);
