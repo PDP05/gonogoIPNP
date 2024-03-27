@@ -100,19 +100,19 @@ for trial = 1:num_trials
 
     % Generates a random NLP
     NLP_duration = randi([min_NLP_duration, max_NLP_duration]);
-    disp(['Random NLP duration: ', num2str(ITI_duration), ' seconds']);
+    disp(['Random NLP duration: ', num2str(NLP_duration), ' seconds']);
 
     % Generates a random TO
     TO_duration = randi([min_TO_duration, max_TO_duration]);
-    disp(['Random TO duration: ', num2str(ITI_duration), ' seconds']);
+    disp(['Random TO duration: ', num2str(TO_duration), ' seconds']);
 
     % Wait for ITI
     disp('Waiting for ITI...');
     pause(ITI_duration);
     
     % Shines the LED and launches lick acquisition until the program exits
-    disp('Shining LED...');
-    shineLED();
+    % disp('Shining LED...');
+    % shineLED();
 
     %% Wait for NLP while checking for inputs
 
